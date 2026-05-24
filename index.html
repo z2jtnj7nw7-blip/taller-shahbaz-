@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller Shahbaz | Taller Mecánico en Valencia</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #1e40af;
+            --bright: #3b82f6;
+            --red: #ef4444;
+            --green: #22c55e;
+            --light: #f8fafc;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #1e2937;
+        }
+        
+        /* Attractive Header */
+        header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .hamburger {
+            font-size: 32px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        
+        .hamburger:hover { background: rgba(255,255,255,0.15); }
+        
+        .logo {
+            font-size: 2.1rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(15,23,42,0.85), rgba(15,23,42,0.9)), url('https://images.unsplash.com/photo-1486262715619-67b85e0b2c3e?ixlib=rb-4.0.3&auto=format&fit=crop&q=80') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 140px 20px 100px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 3px 10px rgba(0,0,0,0.4);
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Navigation Menu */
+        .nav-menu {
+            position: fixed;
+            top: 70px;
+            left: -100%;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: 5px 0 20px rgba(0,0,0,0.2);
+            transition: 0.4s ease;
+            padding: 40px 25px;
+            z-index: 2000;
+        }
+        
+        .nav-menu.active { left: 0; }
+        
+        .nav-menu a {
+            display: block;
+            padding: 14px 0;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        /* Sections */
+        section { padding: 80px 20px; }
+        h2 {
+            font-size: 2.4rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--accent);
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .service-card {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(30,64,175,0.2);
+        }
+        
+        .service-card strong {
+            font-size: 1.35rem;
+            color: var(--accent);
+        }
+        
+        /* Map */
+        .map-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        iframe { width: 100%; height: 480px; border: none; }
+        
+        .btn-whatsapp {
+            background: var(--green);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .closed { color: var(--red); font-weight: bold; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="hamburger" onclick="toggleMenu()">☰</div>
+            <div class="logo">TALLER SHAHBAZ</div>
+            <div></div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <div class="nav-menu" id="navMenu">
+        <a href="#servicios" onclick="toggleMenu()">Servicios</a>
+        <a href="#cita" onclick="toggleMenu()">Solicitar Cita</a>
+        <a href="#mapa" onclick="toggleMenu()">Ubicación</a>
+        <a href="#horario" onclick="toggleMenu()">Horario</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Tu Taller de Confianza</h1>
+        <p>15 años de experiencia • Servicio profesional y cercano en Valencia</p>
+    </section>
+
+    <!-- Services -->
+    <section id="servicios">
+        <h2>Nuestros Servicios</h2>
+        <div class="service-grid">
+            <div class="service-card">
+                <strong>🔧 Mecánica General</strong><br>
+                Reparación completa del vehículo
+            </div>
+            <div class="service-card">
+                <strong>🛑 Frenos</strong><br>
+                Pastillas, discos y sistema completo
+            </div>
+            <div class="service-card">
+                <strong>🛢️ Cambio de Aceite</strong><br>
+                Productos de alta calidad
+            </div>
+            <div class="service-card">
+                <strong>📡 Diagnóstico Electrónico</strong><br>
+                Lectura profesional de averías
+            </div>
+            <div class="service-card">
+                <strong>✅ Pre-ITV</strong><br>
+                Revisión completa antes de ITV
+            </div>
+        </div>
+    </section>
+
+    <!-- Cita -->
+    <section id="cita" style="background: var(--light);">
+        <h2>Solicitar Cita</h2>
+        <div style="max-width: 700px; margin: 0 auto; background: white; padding: 45px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+            <form onsubmit="sendToWhatsApp(event)">
+                <div style="margin-bottom:20px;"><label>Nombre completo</label><input type="text" id="name" required style="width:100%; padding:15px; border-radius:10px; border:1px solid #ddd;"></div>
+                <div style="margin-bottom:20px;"><label>Teléfono</label><input type="tel" id="phone" required style="width:100%; padding:15px; border-radius:10px; border:1px solid #ddd;"></div>
+                <div style="margin-bottom:20px;"><label>Vehículo</label><input type="text" id="vehicle" placeholder="Marca y modelo" required style="width:100%; padding:15px; border-radius:10px; border:1px solid #ddd;"></div>
+                <div style="margin-bottom:20px;"><label>Fecha preferida</label><input type="date" id="date" required style="width:100%; padding:15px; border-radius:10px; border:1px solid #ddd;"></div>
+                <div style="margin-bottom:25px;"><label>Descripción del problema</label><textarea id="message" rows="4" required style="width:100%; padding:15px; border-radius:10px; border:1px solid #ddd;"></textarea></div>
+                <button type="submit" class="btn-whatsapp">📲 Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Map -->
+    <section id="mapa">
+        <h2>Visítanos</h2>
+        <p style="text-align:center; margin-bottom:20px;">Carrer de Torrent, 28, 46014 València</p>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3084.057!2d-0.395!3d39.48!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6048f5f5f5f5f5f%3A0x1234567890abcdef!2sCarrer%20de%20Torrent%2028%2C%2046014%20Val%C3%A8ncia!5e0!3m2!1ses!2ses!4v1234567890" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <!-- Horario -->
+    <section id="horario" style="background: var(--light);">
+        <h2>Horario</h2>
+        <p style="text-align:center; font-size:1.3rem; line-height:2.5;">
+            Lunes – Viernes: <strong>9:00 – 14:00 · 17:00 – 20:00</strong><br><br>
+            Sábado: <strong>10:00 – 14:00</strong><br><br>
+            Domingo: <span class="closed">Cerrado</span>
+        </p>
+    </section>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("navMenu").classList.toggle("active");
+        }
+
+        function sendToWhatsApp(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const vehicle = document.getElementById('vehicle').value;
+            const date = document.getElementById('date').value;
+            const message = document.getElementById('message').value;
+
+            const text = `Hola Taller Shahbaz,%0A%0A` +
+                `Quiero pedir cita:%0A%0A` +
+                `Nombre: ${name}%0A` +
+                `Teléfono: ${phone}%0A` +
+                `Vehículo: ${vehicle}%0A` +
+                `Fecha: ${date}%0A%0A` +
+                `Servicio: ${message}`;
+
+            window.open(`https://wa.me/34632423736?text=${text}`, '_blank');
+        }
+    </script>
+</body>
+</html>
