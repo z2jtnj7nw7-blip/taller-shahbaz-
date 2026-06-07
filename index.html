@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller Shahbaz | Mecánico de Confianza en Valencia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a0a0a;
+            --navy: #0f172a;
+            --blue: #1e40af;
+            --blue-light: #3b82f6;
+            --red: #dc2626;
+            --red-light: #ef4444;
+            --green: #25D366;
+            --gold: #f59e0b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: rgba(255,255,255,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #0a0a0a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ── */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10,10,10,0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-wrap { display: flex; align-items: center; gap: 12px; }
+
+        .logo-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 14px rgba(220,38,38,0.4);
+            flex-shrink: 0;
+        }
+
+        .logo-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .logo-sub {
+            font-size: 0.65rem;
+            color: var(--gray);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        nav { display: flex; align-items: center; gap: 32px; }
+
+        nav a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+
+        nav a:hover { color: #fff; }
+
+        .btn-call {
+            background: var(--red);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-call:hover { background: #b91c1c; transform: translateY(-1px); }
+
+        .hamburger {
+            display: none;
+            font-size: 26px;
+            cursor: pointer;
+            color: #fff;
+            background: none;
+            border: none;
+        }
+
+        /* Mobile Nav */
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            background: #111;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mobile-nav.open { display: flex; }
+
+        .mobile-nav a {
+            padding: 16px 24px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid var(--border);
+            transition: color 0.2s;
+        }
+
+        .mobile-nav a:hover { color: #fff; }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 68px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 70% 50%, rgba(30,64,175,0.15) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(220,38,38,0.1) 0%, transparent 60%),
+                #0a0a0a;
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(220,38,38,0.12);
+            border: 1px solid rgba(220,38,38,0.3);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #fca5a5;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+        }
+
+        .dot { width: 7px; height: 7px; background: var(--red); border-radius: 50%; animation: pulse 2s infinite; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            line-height: 0.95;
+            letter-spacing: 2px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .hero h1 span { color: var(--red); }
+
+        .hero-sub {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            letter-spacing: 4px;
+            color: #475569;
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            color: #94a3b8;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 460px;
+        }
+
+        .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+        .btn-primary {
+            background: var(--red);
+            color: #fff;
+            padding: 15px 32px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            border: 2px solid var(--red);
+        }
+
+        .btn-primary:hover { background: #b91c1c; border-color: #b91c1c; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(220,38,38,0.35); }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            padding: 15px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid rgba(255,255,255,0.15);
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.05); }
+
+        /* Hero Right — Stats Card */
+        .hero-right { display: flex; flex-direction: column; gap: 16px; }
+
+        .stats-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat { text-align: center; }
+
+        .stat-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.8rem;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .stat-num span { color: var(--red); }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--gray);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .horario-card {
+            background: rgba(30,64,175,0.1);
+            border: 1px solid rgba(30,64,175,0.25);
+            border-radius: 16px;
+            padding: 24px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .horario-card .label { font-size: 0.8rem; color: #60a5fa; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+        .horario-card .value { font-weight: 700; color: #fff; font-size: 1rem; }
+
+        .open-badge {
+            background: rgba(37,211,102,0.15);
+            border: 1px solid rgba(37,211,102,0.3);
+            color: #4ade80;
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── GALLERY ── */
+        #galeria { background: #080808; }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto auto;
+            gap: 12px;
+        }
+
+        .gallery-item {
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            background: #111;
+        }
+
+        .gallery-item:first-child {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            min-height: 220px;
+            display: block;
+            transition: transform 0.5s ease, filter 0.3s ease;
+            filter: brightness(0.85);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+            filter: brightness(1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+        }
+
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+        .gallery-overlay span {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 600px) {
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+            .gallery-item:first-child { grid-column: span 2; }
+        }
+
+        /* ── SECTION COMMON ── */
+        section { padding: 100px 24px; }
+
+        .section-inner { max-width: 1200px; margin: 0 auto; }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--red);
+            margin-bottom: 16px;
+        }
+
+        .section-tag::before { content: ''; width: 20px; height: 2px; background: var(--red); }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            letter-spacing: 2px;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            color: #64748b;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            max-width: 520px;
+            margin-bottom: 60px;
+        }
+
+        /* ── SERVICES ── */
+        #servicios { background: #0a0a0a; }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .service-card {
+            background: #0f0f0f;
+            padding: 36px 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: default;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--red);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover::before { transform: scaleX(1); }
+        .service-card:hover { background: #141414; }
+
+        .service-icon {
+            font-size: 2.4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .service-card h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .service-card p { color: #64748b; font-size: 0.9rem; line-height: 1.6; }
+
+        .service-arrow {
+            position: absolute;
+            bottom: 24px; right: 24px;
+            color: #1e3a8a;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover .service-arrow { color: var(--red); transform: translate(3px, -3px); }
+
+        /* ── CITA / FORM ── */
+        #cita { background: #080808; }
+
+        .cita-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .cita-info { }
+
+        .contact-items { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 24px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: border-color 0.2s;
+        }
+
+        .contact-item:hover { border-color: rgba(255,255,255,0.12); }
+
+        .contact-icon {
+            width: 44px; height: 44px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .contact-icon.red { background: rgba(220,38,38,0.12); }
+        .contact-icon.green { background: rgba(37,211,102,0.12); }
+        .contact-icon.blue { background: rgba(59,130,246,0.12); }
+
+        .contact-item a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .contact-item a:hover { color: #fff; }
+
+        .contact-item small { color: #475569; font-size: 0.8rem; display: block; }
+
+        /* Form */
+        .form-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 36px;
+        }
+
+        .form-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+            color: #fff;
+            margin-bottom: 24px;
+        }
+
+        .form-group { margin-bottom: 18px; }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 14px 16px;
+            color: #e2e8f0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--blue-light);
+        }
+
+        .form-group select option { background: #1e1e1e; }
+
+        .form-group textarea { resize: vertical; min-height: 100px; }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        .btn-form {
+            width: 100%;
+            background: var(--green);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 16px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .btn-form:hover { background: #1ea34b; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.25); }
+
+        /* ── MAPA ── */
+        #mapa { background: #0a0a0a; }
+
+        .map-container {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            height: 420px;
+        }
+
+        .map-container iframe {
+            width: 100%; height: 100%;
+            border: none;
+            filter: grayscale(60%) invert(90%) hue-rotate(180deg);
+        }
+
+        .map-address-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            flex-wrap: wrap;
+        }
+
+        .map-open-btn {
+            margin-left: auto;
+            background: var(--blue);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .map-open-btn:hover { background: #1d4ed8; }
+
+        /* ── HORARIO ── */
+        #horario { background: #080808; }
+
+        .horario-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .schedule-table { width: 100%; border-collapse: collapse; }
+
+        .schedule-table tr {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .schedule-table tr:last-child { border-bottom: none; }
+
+        .schedule-table td {
+            padding: 16px 0;
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        .schedule-table td:first-child { color: #e2e8f0; font-weight: 600; }
+
+        .schedule-table td:last-child { text-align: right; }
+
+        .badge-open {
+            background: rgba(37,211,102,0.12);
+            border: 1px solid rgba(37,211,102,0.25);
+            color: #4ade80;
+            padding: 3px 10px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .badge-closed {
+            background: rgba(100,116,139,0.12);
+            border: 1px solid rgba(100,116,139,0.2);
+            color: #64748b;
+            padding: 3px 10px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .horario-cta {
+            background: rgba(30,64,175,0.08);
+            border: 1px solid rgba(30,64,175,0.2);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .horario-cta h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .horario-cta p { color: #64748b; margin-bottom: 28px; line-height: 1.6; }
+
+        .btn-wa {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--green);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-wa:hover { background: #1ea34b; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.3); }
+
+        /* ── FOOTER ── */
+        footer {
+            background: #050505;
+            border-top: 1px solid var(--border);
+            padding: 48px 24px 32px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand .logo-text { font-size: 1.4rem; margin-bottom: 12px; display: block; }
+
+        .footer-brand p { color: #475569; font-size: 0.9rem; line-height: 1.7; max-width: 280px; }
+
+        .footer-col h4 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #475569;
+            margin-bottom: 20px;
+        }
+
+        .footer-col a {
+            display: block;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover { color: #e2e8f0; }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-bottom p { color: #334155; font-size: 0.85rem; }
+
+        /* ── FLOATING BUTTONS ── */
+        .fab-group {
+            position: fixed;
+            bottom: 28px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 9999;
+        }
+
+        .fab {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none;
+            font-size: 26px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            transition: all 0.3s;
+        }
+
+        .fab:hover { transform: scale(1.1); }
+
+        .fab-call { background: var(--red); }
+        .fab-wa { background: var(--green); }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(37,211,102,0.95);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s;
+            z-index: 9999;
+        }
+
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            nav { display: none; }
+            .hamburger { display: block; }
+            .hero-content { grid-template-columns: 1fr; gap: 40px; }
+            .hero-right { order: -1; }
+            .stats-card { grid-template-columns: repeat(4, 1fr); }
+            .cita-grid { grid-template-columns: 1fr; }
+            .horario-grid { grid-template-columns: 1fr; }
+            .footer-top { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .stats-card { grid-template-columns: 1fr 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+            .btn-call { display: none; }
+        }
+
+        /* ── FINAL POLISH ── */
+
+        /* Animated hero particles */
+        .particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+        .particle {
+            position: absolute;
+            width: 2px; height: 2px;
+            background: rgba(220,38,38,0.6);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* Hero line accent */
+        .hero-line {
+            width: 60px; height: 3px;
+            background: linear-gradient(90deg, var(--red), transparent);
+            margin-bottom: 20px;
+            border-radius: 2px;
+        }
+
+        /* Glowing section divider */
+        .glow-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(220,38,38,0.5), transparent);
+            margin: 0;
+        }
+
+        /* Service icon circle */
+        .service-icon-wrap {
+            width: 60px; height: 60px;
+            border-radius: 14px;
+            background: rgba(220,38,38,0.08);
+            border: 1px solid rgba(220,38,38,0.15);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        .service-card:hover .service-icon-wrap {
+            background: rgba(220,38,38,0.15);
+            border-color: rgba(220,38,38,0.3);
+            transform: scale(1.08);
+        }
+
+        /* Stats number counter glow */
+        .stat-num { text-shadow: 0 0 30px rgba(220,38,38,0.3); }
+
+        /* Floating call-to-action strip */
+        .cta-strip {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            padding: 60px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-strip::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .cta-strip h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            letter-spacing: 3px;
+            color: #fff;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        .cta-strip p {
+            color: rgba(255,255,255,0.75);
+            font-size: 1.05rem;
+            margin-bottom: 32px;
+            position: relative;
+        }
+        .cta-strip-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .btn-white {
+            background: #fff;
+            color: #dc2626;
+            padding: 15px 32px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        .btn-white:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
+        .btn-outline-white {
+            background: transparent;
+            color: #fff;
+            padding: 15px 32px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid rgba(255,255,255,0.5);
+            transition: all 0.3s;
+        }
+        .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+
+        /* Review stars strip */
+        .reviews-strip {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            padding: 20px 0;
+            margin-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            flex-wrap: wrap;
+        }
+        .review-item { display: flex; align-items: center; gap: 10px; }
+        .review-stars { color: #f59e0b; font-size: 0.85rem; letter-spacing: 2px; }
+        .review-text { font-size: 0.8rem; color: #64748b; }
+        .review-text strong { color: #94a3b8; display: block; }
+
+        /* Scroll progress bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #dc2626, #ef4444);
+            z-index: 9999;
+            width: 0%;
+            transition: width 0.1s;
+            box-shadow: 0 0 10px rgba(220,38,38,0.7);
+        }
+
+        /* ── FINAL POLISH ── */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+
+<header>
+    <div class="header-inner">
+        <div class="logo-wrap">
+            <div class="logo-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.77z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <div>
+                <div class="logo-text">TALLER <span style="color:var(--red)">SHAHBAZ</span></div>
+                <div class="logo-sub">Valencia · Mecánica</div>
+            </div>
+        </div>
+        <nav>
+            <a href="#servicios">Servicios</a>
+            <a href="#cita">Cita Previa</a>
+            <a href="#mapa">Ubicación</a>
+            <a href="#horario">Horario</a>
+        </nav>
+        <a href="tel:+34697655041" class="btn-call">📞 Llamar ahora</a>
+        <button class="hamburger" onclick="toggleNav()">☰</button>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#servicios" onclick="toggleNav()">Servicios</a>
+        <a href="#cita" onclick="toggleNav()">Cita Previa</a>
+        <a href="#mapa" onclick="toggleNav()">Ubicación</a>
+        <a href="#horario" onclick="toggleNav()">Horario</a>
+        <a href="tel:+34697655041">📞 Llamar ahora</a>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="particles" id="particles"></div>
+    <div class="hero-content">
+        <div class="hero-left">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                Abierto hoy · Valencia
+            </div>
+            <div class="hero-line"></div>
+            <h1>TU TALLER<br><span>DE CONFIANZA</span><br>EN VALENCIA</h1>
+            <div class="hero-sub">MECÁNICA · DIAGNOSIS · REPARACIÓN</div>
+            <p>Más de 15 años de experiencia en mecánica general, electricidad del automóvil y diagnosis de vehículos. Presupuesto sin compromiso.</p>
+            <div class="hero-actions">
+                <a href="https://wa.me/34632423736?text=Hola,%20me%20gustaría%20solicitar%20una%20cita%20en%20Taller%20Shahbaz" class="btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.485-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.372-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.48 2 2 6.59 2 12.25c0 2.1.64 4.05 1.73 5.66L2 22l4.28-1.12c1.5.83 3.24 1.3 5.02 1.3 5.52 0 10-4.59 10-10.25S17.52 2 12 2z"/></svg>
+                    WhatsApp
+                </a>
+                <a href="tel:+34697655041" class="btn-secondary">📞 Llamar</a>
+            </div>
+            <div class="reviews-strip">
+                <div class="review-item">
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text"><strong>+200 reseñas</strong>Google Maps</div>
+                </div>
+                <div class="review-item" style="border-left:1px solid rgba(255,255,255,0.07);padding-left:32px;">
+                    <div style="font-size:1.4rem;">🏆</div>
+                    <div class="review-text"><strong>Taller de confianza</strong>Valencia, Patraix</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="stats-card">
+                <div class="stat">
+                    <div class="stat-num">15<span>+</span></div>
+                    <div class="stat-label">Años experiencia</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">5K<span>+</span></div>
+                    <div class="stat-label">Vehículos reparados</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">⭐<span>5</span></div>
+                    <div class="stat-label">Valoración media</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">0<span>€</span></div>
+                    <div class="stat-label">Presupuesto sin coste</div>
+                </div>
+            </div>
+            <div class="horario-card">
+                <div>
+                    <div class="label">Horario hoy</div>
+                    <div class="value">Lun–Vie · 09:00 – 17:00 · Sáb 10:00 – 14:00</div>
+                </div>
+                <div class="open-badge">● Abierto</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+    <div class="section-inner">
+        <div class="section-tag">Lo que hacemos</div>
+        <h2 class="section-title">NUESTROS SERVICIOS</h2>
+        <p class="section-desc">Trabajamos con todo tipo de vehículos. Desde un cambio de aceite hasta reparaciones complejas de motor.</p>
+        <div class="services-grid fade-in">
+            <div class="service-card">
+                <span class="service-icon">🔧</span>
+                <h3>Mecánica General</h3>
+                <p>Revisiones, cambio de aceite, frenos, embrague, distribución y todo tipo de reparaciones mecánicas.</p>
+                <span class="service-arrow">↗</span>
+            </div>
+            <div class="service-card">
+                <span class="service-icon">💻</span>
+                <h3>Diagnosis Electrónica</h3>
+                <p>Lectura de errores OBD, diagnóstico de averías eléctricas y electrónicas con equipamiento profesional.</p>
+                <span class="service-arrow">↗</span>
+            </div>
+            <div class="service-card">
+                <span class="service-icon">⚡</span>
+                <h3>Electricidad</h3>
+                <p>Reparación de sistemas eléctricos, batería, alternador, arranque y centralitas electrónicas.</p>
+                <span class="service-arrow">↗</span>
+            </div>
+
+
+            <div class="service-card">
+                <span class="service-icon">🔍</span>
+                <h3>Revisión Pre-ITV</h3>
+                <p>Comprobamos tu vehículo antes de pasar la ITV para garantizar que supera todos los controles.</p>
+                <span class="service-arrow">↗</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CITA -->
+<section id="cita">
+    <div class="section-inner">
+        <div class="cita-grid">
+            <div class="cita-info fade-in">
+                <div class="section-tag">Contacto</div>
+                <h2 class="section-title">SOLICITA TU CITA</h2>
+                <p class="section-desc">Reserva en segundos por WhatsApp o llámanos directamente. Respondemos en menos de 1 hora.</p>
+                <div class="contact-items">
+                    <div class="contact-item">
+                        <div class="contact-icon green">📱</div>
+                        <div>
+                            <small>WhatsApp · respuesta rápida</small>
+                            <a href="https://wa.me/34632423736">+34 632 423 736</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon red">📞</div>
+                        <div>
+                            <small>Teléfono taller</small>
+                            <a href="tel:+34697655041">+34 697 655 041</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon blue">✉️</div>
+                        <div>
+                            <small>Email</small>
+                            <a href="mailto:tallerjumar127282@gmail.com">tallerjumar127282@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-card fade-in">
+                <div class="form-title">RESERVAR CITA PREVIA</div>
+                <form id="citaForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" id="nombre" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="tel" id="telefono" placeholder="+34 6XX XXX XXX" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Vehículo</label>
+                        <input type="text" id="vehiculo" placeholder="Ej: Volkswagen Golf 2018" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Servicio</label>
+                        <select id="servicio">
+                            <option value="">Selecciona un servicio</option>
+                            <option>Mecánica general</option>
+                            <option>Diagnosis electrónica</option>
+                            <option>Electricidad</option>
+                            <option>Revisión Pre-ITV</option>
+                            <option>Otro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción de la avería (opcional)</label>
+                        <textarea id="descripcion" placeholder="Cuéntanos qué le pasa a tu vehículo..."></textarea>
+                    </div>
+                    <button type="button" class="btn-form" onclick="sendWhatsApp()">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.485-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.372-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.48 2 2 6.59 2 12.25c0 2.1.64 4.05 1.73 5.66L2 22l4.28-1.12c1.5.83 3.24 1.3 5.02 1.3 5.52 0 10-4.59 10-10.25S17.52 2 12 2z"/></svg>
+                        Enviar por WhatsApp
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MAPA -->
+<section id="mapa">
+    <div class="section-inner">
+        <div class="section-tag">Dónde estamos</div>
+        <h2 class="section-title">¿CÓMO LLEGAR?</h2>
+
+        <!-- Address bar -->
+        <div class="map-address-bar fade-in">
+            <span>📍</span>
+            <span>Carrer de Torrent, 28B, Patraix, 46014 València, España</span>
+            <a href="https://maps.google.com/?q=Carrer+de+Torrent+28,+46014+Valencia+Spain" target="_blank" class="map-open-btn">Abrir en Maps ↗</a>
+        </div>
+
+        <div class="map-container fade-in">
+            <iframe
+                src="https://maps.google.com/maps?q=Carrer+de+Torrent+28,+Patraix,+46014+Valencia,+Spain&t=&z=17&ie=UTF8&iwloc=&output=embed"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+
+        <!-- Como llegar button -->
+        <div style="text-align:center; margin-top: 20px;">
+            <a href="https://maps.google.com/?q=Carrer+de+Torrent+28,+46014+Valencia+Spain" target="_blank" class="btn-primary" style="display:inline-flex;">
+                📍 Cómo llegar
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- HORARIO -->
+<section id="horario">
+    <div class="section-inner">
+        <div class="horario-grid">
+            <div class="fade-in">
+                <div class="section-tag">Horario</div>
+                <h2 class="section-title">CUÁNDO ESTAMOS</h2>
+                <p class="section-desc" style="margin-bottom: 36px;">Trabajamos de lunes a sábado para que nunca te quedes tirado.</p>
+                <table class="schedule-table">
+                    <tr><td>Lunes</td><td>09:00 – 17:00</td><td><span class="badge-open">Abierto</span></td></tr>
+                    <tr><td>Martes</td><td>09:00 – 17:00</td><td><span class="badge-open">Abierto</span></td></tr>
+                    <tr><td>Miércoles</td><td>09:00 – 17:00</td><td><span class="badge-open">Abierto</span></td></tr>
+                    <tr><td>Jueves</td><td>09:00 – 17:00</td><td><span class="badge-open">Abierto</span></td></tr>
+                    <tr><td>Viernes</td><td>09:00 – 17:00</td><td><span class="badge-open">Abierto</span></td></tr>
+                    <tr><td>Sábado</td><td>10:00 – 14:00</td><td><span class="badge-open">Abierto</span></td></tr>
+                    <tr><td style="color:#ef4444;">Domingo</td><td style="color:#ef4444;">Cerrado</td><td><span class="badge-closed" style="color:#ef4444;border-color:rgba(220,38,38,0.3);background:rgba(220,38,38,0.1);">Cerrado</span></td></tr>
+                </table>
+            </div>
+            <div class="horario-cta fade-in">
+                <h3>¿AVERÍA URGENTE?</h3>
+                <p>Escríbenos por WhatsApp y te atendemos lo antes posible. Intentamos responder en menos de 60 minutos.</p>
+                <a href="https://wa.me/34632423736?text=Hola,%20tengo%20una%20avería%20urgente" class="btn-wa">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.485-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.372-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.48 2 2 6.59 2 12.25c0 2.1.64 4.05 1.73 5.66L2 22l4.28-1.12c1.5.83 3.24 1.3 5.02 1.3 5.52 0 10-4.59 10-10.25S17.52 2 12 2z"/></svg>
+                    Escribir por WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA STRIP -->
+<div class="glow-divider"></div>
+<div class="cta-strip">
+    <h2>¿LISTO PARA RESERVAR TU CITA?</h2>
+    <p>Respondemos en menos de 1 hora. Sin esperas, sin sorpresas en el precio.</p>
+    <div class="cta-strip-btns">
+        <a href="https://wa.me/34632423736?text=Hola,%20quiero%20reservar%20una%20cita" class="btn-white">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#dc2626"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.485-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.372-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.48 2 2 6.59 2 12.25c0 2.1.64 4.05 1.73 5.66L2 22l4.28-1.12c1.5.83 3.24 1.3 5.02 1.3 5.52 0 10-4.59 10-10.25S17.52 2 12 2z"/></svg>
+            Escribir por WhatsApp
+        </a>
+        <a href="tel:+34697655041" class="btn-outline-white">📞 Llamar ahora</a>
+    </div>
+</div>
+<div class="glow-divider"></div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <span class="logo-text">🔧 TALLER <span style="color:var(--red)">SHAHBAZ</span></span>
+                <p>Tu taller mecánico de confianza en Valencia. Más de 15 años ofreciendo reparaciones de calidad con honestidad y profesionalidad.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Servicios</h4>
+                <a href="#servicios">Mecánica general</a>
+                <a href="#servicios">Diagnosis</a>
+                <a href="#servicios">Electricidad</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <a href="tel:+34697655041">+34 697 655 041</a>
+                <a href="https://wa.me/34632423736">+34 632 423 736</a>
+                <a href="mailto:tallerjumar127282@gmail.com">tallerjumar127282@gmail.com</a>
+                <a href="https://maps.google.com/?q=Calle+Torrente+28B,+46014+Valencia" target="_blank">C/ Torrente 28B, 46014 Valencia</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Taller Shahbaz · Todos los derechos reservados</p>
+            <p style="color:#475569;">Hecho por Muhammad Umar 🇵🇰</p>
+        </div>
+    </div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<div class="fab-group">
+    <a href="tel:+34697655041" class="fab fab-call" title="Llamar">📞</a>
+    <a href="https://wa.me/34632423736" class="fab fab-wa" title="WhatsApp">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.485-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.372-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.48 2 2 6.59 2 12.25c0 2.1.64 4.05 1.73 5.66L2 22l4.28-1.12c1.5.83 3.24 1.3 5.02 1.3 5.52 0 10-4.59 10-10.25S17.52 2 12 2z"/></svg>
+    </a>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ ¡Redirigiendo a WhatsApp!</div>
+
+<script>
+    // Mobile nav
+    function toggleNav() {
+        document.getElementById('mobileNav').classList.toggle('open');
+    }
+
+    // WhatsApp form
+    function sendWhatsApp() {
+        const nombre = document.getElementById('nombre').value.trim();
+        const telefono = document.getElementById('telefono').value.trim();
+        const vehiculo = document.getElementById('vehiculo').value.trim();
+        const servicio = document.getElementById('servicio').value;
+        const descripcion = document.getElementById('descripcion').value.trim();
+
+        if (!nombre || !telefono || !vehiculo) {
+            alert('Por favor, rellena los campos obligatorios.');
+            return;
+        }
+
+        let msg = `Hola, quiero solicitar una cita en Taller Shahbaz:\n\n`;
+        msg += `👤 Nombre: ${nombre}\n`;
+        msg += `📱 Teléfono: ${telefono}\n`;
+        msg += `🚗 Vehículo: ${vehiculo}\n`;
+        if (servicio) msg += `🔧 Servicio: ${servicio}\n`;
+        if (descripcion) msg += `📝 Descripción: ${descripcion}\n`;
+
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+
+        setTimeout(() => {
+            window.open(`https://wa.me/34632423736?text=${encodeURIComponent(msg)}`, '_blank');
+        }, 600);
+    }
+
+    // Scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) e.target.classList.add('visible');
+        });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Open/Closed badge logic
+    function isOpen() {
+        const now = new Date();
+        const day = now.getDay(); // 0=Dom, 1-5=Lun-Vie, 6=Sab
+        const hour = now.getHours();
+        const min = now.getMinutes();
+        const time = hour * 60 + min;
+        const t = (h, m) => h * 60 + m;
+
+        if (day >= 1 && day <= 5) return time >= t(9,0) && time < t(17,0); // Lun-Vie
+        if (day === 6) return time >= t(10,0) && time < t(14,0);           // Sábado
+        return false;                                                        // Domingo
+    }
+
+    const badge = document.querySelector('.hero-badge');
+    const openBadge = document.querySelector('.open-badge');
+    if (badge) {
+        if (isOpen()) {
+            badge.style.background = 'rgba(37,211,102,0.12)';
+            badge.style.borderColor = 'rgba(37,211,102,0.35)';
+            badge.style.color = '#4ade80';
+            badge.querySelector('.dot').style.background = '#25D366';
+            badge.innerHTML = '<span class="dot"></span> Abierto ahora · Valencia';
+            if (openBadge) { openBadge.textContent = '● Abierto'; openBadge.style.background = 'rgba(37,211,102,0.15)'; openBadge.style.borderColor = 'rgba(37,211,102,0.3)'; openBadge.style.color = '#4ade80'; }
+        } else {
+            badge.style.background = 'rgba(220,38,38,0.12)';
+            badge.style.borderColor = 'rgba(220,38,38,0.35)';
+            badge.style.color = '#f87171';
+            badge.querySelector('.dot').style.background = '#dc2626';
+            badge.innerHTML = '<span class="dot"></span> Cerrado ahora · Valencia';
+            if (openBadge) { openBadge.textContent = '● Cerrado'; openBadge.style.background = 'rgba(220,38,38,0.15)'; openBadge.style.borderColor = 'rgba(220,38,38,0.3)'; openBadge.style.color = '#f87171'; }
+        }
+    }
+
+    // Active nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(s => {
+            if (window.scrollY >= s.offsetTop - 100) current = s.getAttribute('id');
+        });
+        navLinks.forEach(a => {
+            a.style.color = a.getAttribute('href') === `#${current}` ? '#fff' : '';
+        });
+    });
+</script>
+</body>
+</html>
