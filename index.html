@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller Shahbaz | Mecánico de Confianza en Valencia</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --r:#e63535;--r2:#ff4d4d;
+  --g:#22c55e;--wa:#25D366;
+  --gold:#d4a847;--gold2:#f0c96a;
+  --bg:#07070a;--bg2:#0e0e13;--bg3:#13131a;
+  --bdr:rgba(255,255,255,0.07);
+  --txt:#f0f0f0;--sub:#8892a4;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden;cursor:none;}
+@media(max-width:600px){body{cursor:auto;}}
+
+/* ── CURSOR ── */
+.cur{position:fixed;pointer-events:none;z-index:99999;}
+#cd{width:5px;height:5px;background:#fff;border-radius:50%;position:fixed;transform:translate(-50%,-50%);}
+#cr{width:28px;height:28px;border:1px solid rgba(255,255,255,.3);border-radius:50%;position:fixed;transform:translate(-50%,-50%);transition:all .18s;}
+#cr.hov{width:44px;height:44px;border-color:var(--r2);background:rgba(230,53,53,.06);}
+@media(max-width:600px){#cd,#cr{display:none;}}
+
+/* ── LOADER ── */
+#ldr{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .7s,visibility .7s;}
+#ldr.hide{opacity:0;visibility:hidden;}
+.ldr-logo{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:8px;color:#fff;position:relative;}
+.ldr-logo::after{content:'TALLER SHAHBAZ';position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(230,53,53,.8) 50%,transparent 100%);background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 1.2s ease-in-out forwards;}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+.ldr-line{width:180px;height:1px;background:rgba(255,255,255,.06);border-radius:1px;overflow:hidden;}
+.ldr-fill{height:100%;background:linear-gradient(90deg,var(--r),#f97316);animation:fill 1s cubic-bezier(.4,0,.2,1) forwards;}
+@keyframes fill{from{width:0;}to{width:100%;}}
+
+/* ── SCROLL PROGRESS ── */
+#sp{position:fixed;top:0;left:0;height:1.5px;background:linear-gradient(90deg,var(--r),#f97316,#fbbf24);z-index:9999;width:0;box-shadow:0 0 8px rgba(230,53,53,.7);}
+
+/* ── HEADER ── */
+header{position:fixed;top:0;width:100%;z-index:1000;padding:0 32px;transition:all .4s;}
+header.stuck{background:rgba(7,7,10,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);}
+.hrow{max-width:1280px;margin:0 auto;height:70px;display:flex;align-items:center;justify-content:space-between;}
+
+/* logo */
+.logo{display:flex;align-items:center;gap:13px;text-decoration:none;}
+.logo-mark{width:44px;height:44px;border-radius:10px;background:var(--r);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;box-shadow:0 0 24px rgba(230,53,53,.45);}
+.logo-mark svg{position:relative;z-index:1;}
+.logo-mark::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);border-radius:10px;}
+.logo-words{}
+.logo-main{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:3px;line-height:1;color:#fff;}
+.logo-main b{color:var(--r2);}
+.logo-tagline{font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:#3a4555;margin-top:2px;}
+
+/* nav */
+nav a{color:#4a5568;text-decoration:none;font-size:.75rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-left:32px;position:relative;transition:color .25s;}
+nav a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--r2);transition:width .3s;}
+nav a:hover,nav a.on{color:#e2e8f0;}
+nav a:hover::after,nav a.on::after{width:100%;}
+.hcta{display:flex;align-items:center;gap:8px;background:var(--r);color:#fff;padding:9px 20px;border-radius:7px;font-size:.75rem;font-weight:700;letter-spacing:.5px;text-decoration:none;margin-left:32px;transition:all .25s;position:relative;overflow:hidden;}
+.hcta::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.12);transform:translateX(-100%) skewX(-15deg);transition:transform .4s;}
+.hcta:hover::before{transform:translateX(110%) skewX(-15deg);}
+.hcta:hover{box-shadow:0 0 22px rgba(230,53,53,.5);}
+.hbg{display:none;background:none;border:1px solid var(--bdr);border-radius:7px;padding:8px 11px;cursor:pointer;color:#fff;font-size:17px;}
+
+/* mobile nav */
+.mnv{display:none;flex-direction:column;background:#0a0a0d;border-bottom:1px solid var(--bdr);}
+.mnv.open{display:flex;}
+.mnv a{padding:15px 28px;color:#4a5568;text-decoration:none;font-size:.75rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid var(--bdr);transition:all .2s;}
+.mnv a:hover{color:#e2e8f0;background:rgba(255,255,255,.02);padding-left:36px;}
+
+@media(max-width:900px){nav,.hcta{display:none;}.hbg{display:block;}}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:grid;place-items:center;padding-top:70px;position:relative;overflow:hidden;}
+#hcv{position:absolute;inset:0;z-index:0;}
+.hero-in{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:80px 32px;display:grid;grid-template-columns:55fr 45fr;gap:80px;align-items:center;width:100%;}
+
+/* left */
+.pill{display:inline-flex;align-items:center;gap:9px;padding:7px 16px;border-radius:100px;font-size:.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;border:1px solid;}
+.pdot{width:7px;height:7px;border-radius:50%;animation:pdot 2.5s ease-in-out infinite;}
+@keyframes pdot{0%,100%{opacity:1;}50%{opacity:.25;}}
+.h1-pre{font-size:.68rem;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--r2);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.h1-pre::before{content:'';width:24px;height:1px;background:var(--r2);}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,9vw,7.5rem);line-height:.88;letter-spacing:.5px;margin-bottom:28px;}
+h1 .l1{display:block;color:#fff;}
+h1 .l2{display:block;background:linear-gradient(90deg,var(--r2),#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+h1 .l3{display:block;-webkit-text-stroke:1px rgba(255,255,255,.18);color:transparent;}
+.hdesc{font-size:.97rem;color:#4a5568;line-height:1.9;margin-bottom:36px;max-width:430px;font-weight:400;}
+.hdesc strong{color:#94a3b8;font-weight:600;}
+.hbtns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px;}
+.btn-main{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(135deg,var(--wa),#1aad52);color:#fff;padding:14px 26px;border-radius:9px;font-weight:700;font-size:.875rem;text-decoration:none;transition:all .3s;box-shadow:0 6px 28px rgba(37,211,102,.2);}
+.btn-main:hover{transform:translateY(-3px);box-shadow:0 14px 38px rgba(37,211,102,.35);}
+.btn-sec{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#e2e8f0;padding:14px 26px;border-radius:9px;font-weight:600;font-size:.875rem;text-decoration:none;transition:all .3s;}
+.btn-sec:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.2);transform:translateY(-3px);}
+.badges{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.bitem{display:flex;align-items:center;gap:6px;font-size:.75rem;color:#2d3748;font-weight:500;}
+.bitem strong{color:#4a5568;}
+.bsep{width:1px;height:14px;background:var(--bdr);}
+
+/* right */
+.hero-r{display:flex;flex-direction:column;gap:10px;}
+
+/* stat card */
+.stat-card{background:rgba(255,255,255,.028);border:1px solid rgba(212,168,71,.18);border-radius:18px;overflow:hidden;position:relative;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,71,.5),transparent);}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;}
+.scell{padding:22px 16px;text-align:center;position:relative;}
+.scell:nth-child(1),.scell:nth-child(2){border-bottom:1px solid rgba(255,255,255,.05);}
+.scell:nth-child(odd){border-right:1px solid rgba(255,255,255,.05);}
+.snum{font-family:'Bebas Neue',sans-serif;font-size:2.9rem;line-height:1;background:linear-gradient(170deg,#ffffff 0%,#e8d5a0 55%,#c9a84c 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 6px rgba(212,168,71,.15));}
+.snum sup{font-size:1.1rem;-webkit-text-fill-color:#c9a84c;color:#c9a84c;}
+.slbl{font-size:.58rem;letter-spacing:2.5px;text-transform:uppercase;color:#2d3748;margin-top:5px;}
+
+/* time card */
+.time-card{background:rgba(255,255,255,.028);border:1px solid var(--bdr);border-radius:18px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.tc-label{font-size:.6rem;letter-spacing:2.5px;text-transform:uppercase;color:#3b82f6;margin-bottom:5px;}
+.tc-val{font-weight:700;color:#f0f0f0;font-size:.85rem;line-height:1.55;}
+.status-tag{padding:7px 14px;border-radius:100px;font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap;border:1px solid;flex-shrink:0;}
+
+/* quick grid */
+.quick-card{background:rgba(255,255,255,.028);border:1px solid var(--bdr);border-radius:18px;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px;}
+.qlink{display:flex;align-items:center;gap:9px;padding:11px 12px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);text-decoration:none;transition:all .3s;}
+.qlink:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.1);transform:translateY(-2px);}
+.qi{font-size:1.1rem;}
+.qt{font-size:.7rem;font-weight:700;color:#94a3b8;line-height:1.3;}
+.qt span{display:block;font-size:.6rem;color:#2d3748;font-weight:400;}
+
+@media(max-width:960px){
+  .hero-in{grid-template-columns:1fr;gap:40px;padding:60px 20px;}
+  .hero-r{order:-1;}
+  .sgrid{grid-template-columns:repeat(4,1fr);}
+  .scell:nth-child(1),.scell:nth-child(2){border-bottom:none;}
+  .scell:nth-child(odd){border-right:1px solid rgba(255,255,255,.05);}
+}
+@media(max-width:580px){
+  .sgrid{grid-template-columns:1fr 1fr;}
+  .scell:nth-child(1),.scell:nth-child(2){border-bottom:1px solid rgba(255,255,255,.05);}
+  h1{font-size:3.4rem;}
+}
+
+/* ── TICKER ── */
+.ticker{background:var(--r);padding:12px 0;overflow:hidden;position:relative;}
+.ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--r),transparent);}
+.ticker::after{right:0;background:linear-gradient(-90deg,var(--r),transparent);}
+.ticker-t{display:flex;width:max-content;animation:tick 24s linear infinite;}
+.ticker-t:hover{animation-play-state:paused;}
+@keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.tick-i{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:3.5px;color:rgba(255,255,255,.88);white-space:nowrap;padding-right:44px;display:flex;align-items:center;}
+.tick-sep{width:3px;height:3px;background:rgba(255,255,255,.35);border-radius:50%;margin-right:44px;}
+
+/* ── SECTIONS ── */
+section{padding:110px 32px;}
+.wrap{max-width:1280px;margin:0 auto;}
+.s-tag{display:inline-flex;align-items:center;gap:9px;font-size:.65rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--r2);margin-bottom:14px;}
+.s-tag::before{content:'';width:20px;height:1px;background:linear-gradient(90deg,var(--r2),#f97316);}
+.s-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5vw,5rem);letter-spacing:2px;color:#fff;line-height:.92;margin-bottom:18px;}
+.s-d{color:#3a4555;font-size:.93rem;line-height:1.9;max-width:480px;margin-bottom:64px;font-weight:400;}
+
+/* ── SERVICES ── */
+#svcs{background:var(--bg);}
+.svc-g{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.04);border-radius:22px;overflow:hidden;border:1px solid var(--bdr);}
+.svc{background:var(--bg2);padding:44px 38px;position:relative;overflow:hidden;transition:background .4s;}
+.svc:hover{background:#101016;}
+.svc-shine{position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,var(--r),#f97316);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.23,1,.32,1);}
+.svc:hover .svc-shine{transform:scaleX(1);}
+.svc-glow{position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(230,53,53,.07),transparent 70%);top:-80px;right:-80px;opacity:0;transition:opacity .5s,transform .5s;}
+.svc:hover .svc-glow{opacity:1;transform:scale(1.25);}
+.svc-ico{width:54px;height:54px;border-radius:13px;background:rgba(230,53,53,.07);border:1px solid rgba(230,53,53,.12);display:flex;align-items:center;justify-content:center;font-size:1.55rem;margin-bottom:24px;transition:all .4s;}
+.svc:hover .svc-ico{background:rgba(230,53,53,.13);border-color:rgba(230,53,53,.26);transform:scale(1.08) rotate(-4deg);box-shadow:0 0 20px rgba(230,53,53,.18);}
+.svc h3{font-family:'Bebas Neue',sans-serif;font-size:1.65rem;letter-spacing:1.5px;color:#fff;margin-bottom:10px;}
+.svc p{color:#3a4555;font-size:.855rem;line-height:1.78;font-weight:400;}
+.svc-n{position:absolute;bottom:18px;right:22px;font-family:'Bebas Neue',sans-serif;font-size:5rem;color:rgba(255,255,255,.025);line-height:1;transition:color .3s;}
+.svc:hover .svc-n{color:rgba(230,53,53,.05);}
+.svc-arr{position:absolute;top:22px;right:22px;width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;color:#2d3748;font-size:.85rem;transition:all .3s;}
+.svc:hover .svc-arr{background:rgba(230,53,53,.1);border-color:rgba(230,53,53,.22);color:var(--r2);transform:translate(2px,-2px);}
+@media(max-width:700px){.svc-g{grid-template-columns:1fr;}}
+
+/* ── WHY ── */
+#why{background:var(--bg2);}
+.why-g{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.why-c{padding:30px 26px;border-radius:16px;background:rgba(255,255,255,.02);border:1px solid var(--bdr);transition:all .35s;position:relative;overflow:hidden;}
+.why-c:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.09);transform:translateY(-5px);}
+.why-c::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent,var(--r),transparent);opacity:0;transition:opacity .35s;}
+.why-c:hover::after{opacity:1;}
+.why-i{font-size:2rem;margin-bottom:16px;display:block;}
+.why-c h4{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:1.5px;color:#fff;margin-bottom:8px;}
+.why-c p{color:#3a4555;font-size:.825rem;line-height:1.75;font-weight:400;}
+@media(max-width:700px){.why-g{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.why-g{grid-template-columns:1fr;}}
+
+/* ── CITA ── */
+#cita{background:var(--bg);}
+.cita-g{display:grid;grid-template-columns:1fr 1fr;gap:68px;align-items:start;}
+.cstack{display:flex;flex-direction:column;gap:11px;margin-top:32px;}
+.crow{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid var(--bdr);text-decoration:none;transition:all .3s;position:relative;overflow:hidden;}
+.crow::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--r),#f97316);transform:scaleY(0);transform-origin:bottom;transition:transform .3s;}
+.crow:hover::before{transform:scaleY(1);}
+.crow:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.09);padding-left:22px;}
+.c-i{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.c-l{font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:#2d3748;margin-bottom:2px;}
+.c-v{font-weight:700;color:#e2e8f0;font-size:.875rem;}
+.fbox{background:rgba(255,255,255,.025);border:1px solid var(--bdr);border-radius:22px;padding:36px;}
+.fh{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px;color:#fff;margin-bottom:4px;}
+.fs{font-size:.72rem;color:#2d3748;margin-bottom:26px;letter-spacing:.5px;}
+.fg{margin-bottom:14px;}
+.fg label{display:block;font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2d3748;margin-bottom:6px;}
+.fg input,.fg select,.fg textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:9px;padding:12px 15px;color:#e2e8f0;font-family:'Inter',sans-serif;font-size:.855rem;outline:none;transition:all .3s;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:rgba(230,53,53,.4);background:rgba(230,53,53,.04);box-shadow:0 0 0 3px rgba(230,53,53,.08);}
+.fg select option{background:#14141a;}
+.fg textarea{resize:vertical;min-height:84px;}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.bsub{width:100%;margin-top:6px;background:linear-gradient(135deg,var(--wa),#1aad52);color:#fff;border:none;border-radius:9px;padding:14px;font-family:'Inter',sans-serif;font-size:.875rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:all .3s;}
+.bsub:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(37,211,102,.3);}
+@media(max-width:800px){.cita-g{grid-template-columns:1fr;}}
+@media(max-width:480px){.f2{grid-template-columns:1fr;}}
+
+/* ── MAPA ── */
+#mapa{background:var(--bg2);}
+.map-bar{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.025);border:1px solid var(--bdr);border-radius:12px;padding:14px 18px;margin-bottom:14px;font-size:.855rem;color:#4a5568;flex-wrap:wrap;}
+.map-open{margin-left:auto;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.22);color:#60a5fa;padding:6px 14px;border-radius:7px;font-size:.72rem;font-weight:700;text-decoration:none;white-space:nowrap;transition:all .22s;}
+.map-open:hover{background:rgba(59,130,246,.22);}
+.map-f{border-radius:20px;overflow:hidden;border:1px solid var(--bdr);height:440px;box-shadow:0 24px 56px rgba(0,0,0,.5);}
+.map-f iframe{width:100%;height:100%;border:none;filter:grayscale(50%) contrast(.9);}
+.map-cta{text-align:center;margin-top:18px;}
+.bdir{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.04);border:1px solid var(--bdr);color:#e2e8f0;padding:12px 26px;border-radius:9px;font-weight:700;font-size:.825rem;text-decoration:none;transition:all .3s;}
+.bdir:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);transform:translateY(-2px);}
+
+/* ── HORARIO ── */
+#horario{background:var(--bg);}
+.h-lay{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.sch{width:100%;border-collapse:collapse;}
+.sr{border-bottom:1px solid var(--bdr);transition:background .2s;}
+.sr:hover{background:rgba(255,255,255,.012);}
+.sr:last-child{border-bottom:none;}
+.sr td{padding:14px 6px;font-size:.855rem;}
+.sr td:first-child{font-weight:600;color:#e2e8f0;padding-left:0;}
+.sr td:nth-child(2){color:#3a4555;}
+.sr td:last-child{text-align:right;padding-right:0;}
+.ob{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);color:#4ade80;padding:3px 11px;border-radius:100px;font-size:.64rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+.cb{background:rgba(230,53,53,.08);border:1px solid rgba(230,53,53,.2);color:#f87171;padding:3px 11px;border-radius:100px;font-size:.64rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+.urg-box{background:linear-gradient(135deg,rgba(230,53,53,.07),rgba(230,53,53,.03));border:1px solid rgba(230,53,53,.13);border-radius:22px;padding:44px 36px;text-align:center;position:relative;overflow:hidden;}
+.urg-box::before{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(230,53,53,.1),transparent);}
+.urg-ico{font-size:2.6rem;margin-bottom:18px;display:block;animation:ring 3s ease-in-out infinite;}
+@keyframes ring{0%,85%,100%{transform:rotate(0);}88%{transform:rotate(-10deg);}92%{transform:rotate(10deg);}96%{transform:rotate(-5deg);}}
+.urg-box h3{font-family:'Bebas Neue',sans-serif;font-size:2.1rem;letter-spacing:2px;color:#fff;margin-bottom:10px;position:relative;}
+.urg-box p{color:#3a4555;line-height:1.78;font-size:.855rem;margin-bottom:28px;font-weight:400;position:relative;}
+.bwa{display:inline-flex;align-items:center;gap:9px;background:var(--wa);color:#fff;padding:14px 28px;border-radius:11px;font-weight:800;text-decoration:none;font-size:.875rem;transition:all .3s;box-shadow:0 6px 24px rgba(37,211,102,.2);}
+.bwa:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(37,211,102,.35);}
+@media(max-width:800px){.h-lay{grid-template-columns:1fr;}}
+
+/* ── CTA BAND ── */
+.ctab{background:linear-gradient(135deg,#c0392b 0%,#7a1414 50%,#8b1a1a 100%);padding:88px 32px;text-align:center;position:relative;overflow:hidden;}
+.ctab::before{content:'TALLER SHAHBAZ';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,12vw,13rem);letter-spacing:10px;color:rgba(0,0,0,.13);white-space:nowrap;pointer-events:none;line-height:1;}
+.ctab-in{position:relative;z-index:1;}
+.ctab h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,4rem);letter-spacing:3px;color:#fff;margin-bottom:12px;}
+.ctab p{color:rgba(255,255,255,.55);font-size:.95rem;margin-bottom:36px;}
+.ctab-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.bw{display:inline-flex;align-items:center;gap:9px;background:#fff;color:#c0392b;padding:14px 28px;border-radius:9px;font-weight:800;font-size:.875rem;text-decoration:none;transition:all .3s;}
+.bw:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(0,0,0,.3);}
+.bo{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.3);color:#fff;padding:14px 28px;border-radius:9px;font-weight:700;font-size:.875rem;text-decoration:none;transition:all .3s;}
+.bo:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.55);}
+
+/* ── FOOTER ── */
+footer{background:#040407;border-top:1px solid var(--bdr);padding:60px 32px 32px;}
+.fi{max-width:1280px;margin:0 auto;}
+.fg2{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.fb-desc{color:#64748b;font-size:.825rem;line-height:1.85;max-width:270px;margin-top:16px;}
+.fln{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:3px;color:#fff;}
+.fln b{color:var(--r2);}
+.fc h4{font-size:.6rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#475569;margin-bottom:18px;}
+.fc a{display:block;color:#64748b;text-decoration:none;font-size:.825rem;margin-bottom:9px;transition:all .22s;}
+.fc a:hover{color:#e2e8f0;padding-left:5px;}
+.fbot{border-top:1px solid var(--bdr);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.fbot p{color:#475569;font-size:.775rem;}
+@media(max-width:700px){.fg2{grid-template-columns:1fr;}.fbot{flex-direction:column;text-align:center;}}
+
+/* ── FABS ── */
+.fabs{position:fixed;bottom:26px;right:22px;display:flex;flex-direction:column;gap:10px;z-index:9999;}
+.fab{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all .35s cubic-bezier(.23,1,.32,1);position:relative;}
+.fab:hover{transform:scale(1.1) translateY(-3px);}
+.fab-p{background:linear-gradient(135deg,var(--r),#9b1c1c);box-shadow:0 6px 22px rgba(230,53,53,.4);}
+.fab-w{background:linear-gradient(135deg,var(--wa),#1a8a3e);box-shadow:0 6px 22px rgba(37,211,102,.3);}
+.fab-tip{position:absolute;right:63px;top:50%;transform:translateY(-50%);background:rgba(7,7,10,.97);color:#e2e8f0;padding:5px 11px;border-radius:7px;font-size:.7rem;font-weight:700;white-space:nowrap;border:1px solid var(--bdr);opacity:0;pointer-events:none;transition:all .25s;}
+.fab:hover .fab-tip{opacity:1;right:67px;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:108px;left:50%;transform:translateX(-50%) translateY(18px);background:linear-gradient(135deg,var(--wa),#1aad52);color:#fff;padding:12px 26px;border-radius:100px;font-weight:700;font-size:.825rem;opacity:0;pointer-events:none;transition:all .4s;z-index:9999;box-shadow:0 8px 24px rgba(37,211,102,.38);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── REVEAL ── */
+.rv{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.23,1,.32,1),transform .8s cubic-bezier(.23,1,.32,1);}
+.rl{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.23,1,.32,1),transform .8s cubic-bezier(.23,1,.32,1);}
+.rr{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.23,1,.32,1),transform .8s cubic-bezier(.23,1,.32,1);}
+.rv.on,.rl.on,.rr.on{opacity:1;transform:translate(0);}
+.d1{transition-delay:.06s;}.d2{transition-delay:.14s;}.d3{transition-delay:.22s;}.d4{transition-delay:.30s;}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="ldr">
+  <div class="ldr-logo">TALLER SHAHBAZ</div>
+  <div class="ldr-line"><div class="ldr-fill"></div></div>
+</div>
+
+<!-- CURSOR -->
+<div id="cd"></div><div id="cr"></div>
+
+<!-- SCROLL PROGRESS -->
+<div id="sp"></div>
+
+<!-- HEADER -->
+<header id="hdr">
+  <div class="hrow">
+    <a href="#top" class="logo">
+      <div class="logo-mark">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.77z" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="logo-words">
+        <div class="logo-main">TALLER <b>SHAHBAZ</b></div>
+        <div class="logo-tagline">Valencia · Mecánica</div>
+      </div>
+    </a>
+    <nav>
+      <a href="#svcs">Servicios</a>
+      <a href="#why">Nosotros</a>
+      <a href="#cita">Cita Previa</a>
+      <a href="#mapa">Ubicación</a>
+      <a href="#horario">Horario</a>
+    </nav>
+    <a href="tel:+34697655041" class="hcta">📞 Llamar ahora</a>
+    <button class="hbg" onclick="tog()">☰</button>
+  </div>
+  <div class="mnv" id="mnv">
+    <a href="#svcs" onclick="tog()">Servicios</a>
+    <a href="#why" onclick="tog()">Nosotros</a>
+    <a href="#cita" onclick="tog()">Cita Previa</a>
+    <a href="#mapa" onclick="tog()">Ubicación</a>
+    <a href="#horario" onclick="tog()">Horario</a>
+    <a href="tel:+34697655041" onclick="tog()">📞 Llamar ahora</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <canvas id="hcv"></canvas>
+  <div class="hero-in">
+    <div>
+      <div class="pill" id="pill"><span class="pdot" id="pdot"></span><span id="ptxt">Abierto ahora</span></div>
+      <div class="h1-pre">Taller Mecánico de Confianza</div>
+      <h1>
+        <span class="l1">TU TALLER</span>
+        <span class="l2">DE CONFIANZA</span>
+        <span class="l3">EN VALENCIA</span>
+      </h1>
+      <p class="hdesc">Más de <strong>15 años de experiencia</strong> en mecánica general, electricidad y diagnosis. Presupuesto <strong>gratuito</strong> sin compromiso.</p>
+      <div class="hbtns">
+        <a href="https://wa.me/34632423736?text=Hola,%20quiero%20solicitar%20una%20cita%20en%20Taller%20Shahbaz" class="btn-main">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.485-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.372-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.48 2 2 6.59 2 12.25c0 2.1.64 4.05 1.73 5.66L2 22l4.28-1.12c1.5.83 3.24 1.3 5.02 1.3 5.52 0 10-4.59 10-10.25S17.52 2 12 2z"/></svg>
+          Reservar por WhatsApp
+        </a>
+        <a href="tel:+34697655041" class="btn-sec">📞 Llamar ahora</a>
+      </div>
+      <div class="badges">
+        <div class="bitem">⭐⭐⭐⭐⭐ <strong>5.0 Google</strong></div>
+        <div class="bsep"></div>
+        <div class="bitem">🏆 <strong>+200 reseñas</strong></div>
+        <div class="bsep"></div>
+        <div class="bitem">✅ Presupuesto <strong>gratis</strong></div>
+        <div class="bsep"></div>
+        <div class="bitem">🔒 Garantía <strong>incluida</strong></div>
+      </div>
+    </div>
+    <div class="hero-r">
+      <div class="stat-card">
+        <div class="sgrid">
+          <div class="scell"><div class="snum" id="sY">0<sup>+</sup></div><div class="slbl">Años experiencia</div></div>
+          <div class="scell"><div class="snum" id="sC">0<sup>+</sup></div><div class="slbl">Vehículos reparados</div></div>
+          <div class="scell"><div class="snum">⭐5</div><div class="slbl">Valoración media</div></div>
+          <div class="scell"><div class="snum" style="background:linear-gradient(170deg,#ffffff,#e8d5a0,#c9a84c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 6px rgba(212,168,71,.18))">0<sup style="-webkit-text-fill-color:#c9a84c">€</sup></div><div class="slbl">Presupuesto sin coste</div></div>
+        </div>
+      </div>
+      <div class="time-card">
+        <div>
+          <div class="tc-label">Horario de apertura</div>
+          <div class="tc-val" id="tcval">Lun–Vie · 09:00–14:00 · 16:00–19:00<br>Sábado · 10:00 – 14:00</div>
+        </div>
+        <div class="status-tag" id="stag2">● Abierto</div>
+      </div>
+      <div class="quick-card">
+        <a href="https://wa.me/34632423736" class="qlink"><span class="qi">💬</span><div class="qt">WhatsApp<span>Respuesta rápida</span></div></a>
+        <a href="tel:+34697655041" class="qlink"><span class="qi">📞</span><div class="qt">Llamar<span>+34 697 655 041</span></div></a>
+        <a href="#mapa" class="qlink"><span class="qi">📍</span><div class="qt">Ubicación<span>Patraix, Valencia</span></div></a>
+        <a href="#cita" class="qlink"><span class="qi">📅</span><div class="qt">Cita previa<span>Sin esperas</span></div></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-t">
+    <div class="tick-i">MECÁNICA GENERAL<span class="tick-sep"></span>DIAGNOSIS ELECTRÓNICA<span class="tick-sep"></span>ELECTRICIDAD<span class="tick-sep"></span>REVISIÓN PRE-ITV<span class="tick-sep"></span>VALENCIA · PATRAIX<span class="tick-sep"></span>15 AÑOS DE EXPERIENCIA<span class="tick-sep"></span>PRESUPUESTO GRATIS<span class="tick-sep"></span>GARANTÍA INCLUIDA<span class="tick-sep"></span></div>
+    <div class="tick-i">MECÁNICA GENERAL<span class="tick-sep"></span>DIAGNOSIS ELECTRÓNICA<span class="tick-sep"></span>ELECTRICIDAD<span class="tick-sep"></span>REVISIÓN PRE-ITV<span class="tick-sep"></span>VALENCIA · PATRAIX<span class="tick-sep"></span>15 AÑOS DE EXPERIENCIA<span class="tick-sep"></span>PRESUPUESTO GRATIS<span class="tick-sep"></span>GARANTÍA INCLUIDA<span class="tick-sep"></span></div>
+  </div>
+</div>
+
+<!-- SERVICIOS -->
+<section id="svcs">
+  <div class="wrap">
+    <div class="rv"><div class="s-tag">Lo que hacemos</div><h2 class="s-h">NUESTROS SERVICIOS</h2><p class="s-d">Trabajamos con todas las marcas. Diagnóstico preciso, reparación de calidad y precio justo garantizado.</p></div>
+    <div class="svc-g rv d1">
+      <div class="svc"><div class="svc-shine"></div><div class="svc-glow"></div><div class="svc-ico">🔧</div><h3>Mecánica General</h3><p>Revisiones, cambio de aceite, frenos, embrague, distribución y todo tipo de reparaciones mecánicas con garantía.</p><div class="svc-n">01</div><div class="svc-arr">↗</div></div>
+      <div class="svc"><div class="svc-shine"></div><div class="svc-glow"></div><div class="svc-ico">💻</div><h3>Diagnosis Electrónica</h3><p>Lectura de errores OBD, diagnóstico de averías eléctricas y electrónicas con equipamiento profesional de última generación.</p><div class="svc-n">02</div><div class="svc-arr">↗</div></div>
+      <div class="svc"><div class="svc-shine"></div><div class="svc-glow"></div><div class="svc-ico">⚡</div><h3>Electricidad</h3><p>Reparación de sistemas eléctricos, batería, alternador, motor de arranque y reprogramación de centralitas.</p><div class="svc-n">03</div><div class="svc-arr">↗</div></div>
+      <div class="svc"><div class="svc-shine"></div><div class="svc-glow"></div><div class="svc-ico">🔍</div><h3>Revisión Pre-ITV</h3><p>Comprobación exhaustiva antes de la ITV para garantizar que tu vehículo supera todos los controles sin sorpresas.</p><div class="svc-n">04</div><div class="svc-arr">↗</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="wrap">
+    <div class="rv"><div class="s-tag">Por qué elegirnos</div><h2 class="s-h">TU CONFIANZA,<br>NUESTRA PRIORIDAD</h2><p class="s-d">No somos solo un taller. Somos tu mecánico de cabecera en Valencia.</p></div>
+    <div class="why-g">
+      <div class="why-c rv d1"><span class="why-i">🏆</span><h4>15 Años de Experiencia</h4><p>Llevamos más de 15 años resolviendo averías con profesionalidad y honestidad total.</p></div>
+      <div class="why-c rv d2"><span class="why-i">💰</span><h4>Precio Justo</h4><p>Presupuesto gratuito, sin sorpresas. Solo pagas lo acordado. Transparencia total.</p></div>
+      <div class="why-c rv d3"><span class="why-i">⚡</span><h4>Rapidez</h4><p>Trabajamos con agilidad para que recuperes tu vehículo lo antes posible.</p></div>
+      <div class="why-c rv d1"><span class="why-i">🔒</span><h4>Garantía</h4><p>Todas las reparaciones incluyen garantía. Tu tranquilidad es nuestra responsabilidad.</p></div>
+      <div class="why-c rv d2"><span class="why-i">📞</span><h4>Atención Directa</h4><p>Sin intermediarios, sin call centers. Hablas directamente con el mecánico.</p></div>
+      <div class="why-c rv d3"><span class="why-i">📍</span><h4>Fácil Ubicación</h4><p>Situados en Patraix, Valencia. Acceso fácil y aparcamiento disponible.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CITA -->
+<section id="cita">
+  <div class="wrap">
+    <div class="cita-g">
+      <div class="rl">
+        <div class="s-tag">Contacto</div>
+        <h2 class="s-h">SOLICITA TU CITA</h2>
+        <p class="s-d" style="margin-bottom:0">Respondemos en menos de 1 hora en horario de apertura.</p>
+        <div class="cstack">
+          <a href="https://wa.me/34632423736" class="crow"><div class="c-i" style="background:rgba(37,211,102,.1)">💬</div><div><div class="c-l">WhatsApp · respuesta rápida</div><div class="c-v">+34 632 423 736</div></div></a>
+          <a href="tel:+34697655041" class="crow"><div class="c-i" style="background:rgba(230,53,53,.1)">📞</div><div><div class="c-l">Teléfono taller</div><div class="c-v">+34 697 655 041</div></div></a>
+          <a href="mailto:tallerjumar127282@gmail.com" class="crow"><div class="c-i" style="background:rgba(59,130,246,.1)">✉️</div><div><div class="c-l">Email</div><div class="c-v">tallerjumar127282@gmail.com</div></div></a>
+          <a href="https://maps.google.com/?q=Carrer+de+Torrent+28B,+46014+Valencia" target="_blank" class="crow"><div class="c-i" style="background:rgba(245,158,11,.1)">📍</div><div><div class="c-l">Dirección</div><div class="c-v">C/ Torrente 28B, 46014 Valencia</div></div></a>
+        </div>
+      </div>
+      <div class="rr">
+        <div class="fbox">
+          <div class="fh">RESERVAR CITA</div>
+          <div class="fs">Confirmamos en menos de 60 minutos ✓</div>
+          <div class="f2">
+            <div class="fg"><label>Nombre</label><input type="text" id="nombre" placeholder="Tu nombre"></div>
+            <div class="fg"><label>Teléfono</label><input type="tel" id="telefono" placeholder="+34 6XX XXX XXX"></div>
+          </div>
+          <div class="fg"><label>Vehículo</label><input type="text" id="vehiculo" placeholder="Ej: Volkswagen Golf 2018"></div>
+          <div class="fg"><label>Servicio</label>
+            <select id="servicio">
+              <option value="">Selecciona un servicio...</option>
+              <option>Mecánica general</option>
+              <option>Diagnosis electrónica</option>
+              <option>Electricidad</option>
+              <option>Revisión Pre-ITV</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="fg"><label>Descripción (opcional)</label><textarea id="descripcion" placeholder="¿Qué le pasa a tu vehículo?"></textarea></div>
+          <button class="bsub" onclick="sendWA()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.485-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.372-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.48 2 2 6.59 2 12.25c0 2.1.64 4.05 1.73 5.66L2 22l4.28-1.12c1.5.83 3.24 1.3 5.02 1.3 5.52 0 10-4.59 10-10.25S17.52 2 12 2z"/></svg>
+            Enviar por WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAPA -->
+<section id="mapa" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="rv"><div class="s-tag">Dónde estamos</div><h2 class="s-h">¿CÓMO LLEGAR?</h2></div>
+    <div class="map-bar rv">
+      <span>📍</span>
+      <span>Carrer de Torrent, 28B &nbsp;·&nbsp; Patraix &nbsp;·&nbsp; 46014 València &nbsp;·&nbsp; España</span>
+      <a href="https://maps.google.com/?q=Carrer+de+Torrent+28,+46014+Valencia" target="_blank" class="map-open">Abrir en Google Maps ↗</a>
+    </div>
+    <div class="map-f rv"><iframe src="https://maps.google.com/maps?q=Carrer+de+Torrent+28,+Patraix,+46014+Valencia,+Spain&t=&z=17&ie=UTF8&iwloc=&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    <div class="map-cta rv"><a href="https://maps.google.com/?q=Carrer+de+Torrent+28,+46014+Valencia" target="_blank" class="bdir">📍 Abrir en Google Maps</a></div>
+  </div>
+</section>
+
+<!-- HORARIO -->
+<section id="horario">
+  <div class="wrap">
+    <div class="h-lay">
+      <div class="rl">
+        <div class="s-tag">Horario</div>
+        <h2 class="s-h">CUÁNDO ESTAMOS</h2>
+        <p class="s-d" style="margin-bottom:36px">Lunes a viernes con pausa. Sábados por la mañana.</p>
+        <table class="sch">
+          <tr class="sr"><td>Lunes</td><td>09:00–14:00 · 16:00–19:00</td><td><span class="ob">Abierto</span></td></tr>
+          <tr class="sr"><td>Martes</td><td>09:00–14:00 · 16:00–19:00</td><td><span class="ob">Abierto</span></td></tr>
+          <tr class="sr"><td>Miércoles</td><td>09:00–14:00 · 16:00–19:00</td><td><span class="ob">Abierto</span></td></tr>
+          <tr class="sr"><td>Jueves</td><td>09:00–14:00 · 16:00–19:00</td><td><span class="ob">Abierto</span></td></tr>
+          <tr class="sr"><td>Viernes</td><td>09:00–14:00 · 16:00–19:00</td><td><span class="ob">Abierto</span></td></tr>
+          <tr class="sr"><td>Sábado</td><td>10:00 – 14:00</td><td><span class="ob">Abierto</span></td></tr>
+          <tr class="sr"><td style="color:#f87171;font-weight:700">Domingo</td><td style="color:#f87171">Cerrado</td><td><span class="cb">Cerrado</span></td></tr>
+        </table>
+      </div>
+      <div class="rr">
+        <div class="urg-box">
+          <span class="urg-ico">🚨</span>
+          <h3>¿AVERÍA URGENTE?</h3>
+          <p>Escríbenos por WhatsApp y te atendemos lo antes posible. Respondemos en menos de 60 minutos en horario de apertura.</p>
+          <a href="https://wa.me/34632423736?text=Hola,%20tengo%20una%20avería%20urgente" class="bwa">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.485-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.372-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.48 2 2 6.59 2 12.25c0 2.1.64 4.05 1.73 5.66L2 22l4.28-1.12c1.5.83 3.24 1.3 5.02 1.3 5.52 0 10-4.59 10-10.25S17.52 2 12 2z"/></svg>
+            Escribir por WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="ctab">
+  <div class="ctab-in">
+    <h2>¿LISTO PARA RESERVAR TU CITA?</h2>
+    <p>Sin esperas. Sin sorpresas. Respondemos en menos de 1 hora.</p>
+    <div class="ctab-btns">
+      <a href="https://wa.me/34632423736?text=Hola,%20quiero%20reservar%20una%20cita" class="bw">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#c0392b"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.485-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.372-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.48 2 2 6.59 2 12.25c0 2.1.64 4.05 1.73 5.66L2 22l4.28-1.12c1.5.83 3.24 1.3 5.02 1.3 5.52 0 10-4.59 10-10.25S17.52 2 12 2z"/></svg>
+        WhatsApp
+      </a>
+      <a href="tel:+34697655041" class="bo">📞 Llamar ahora</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fi">
+    <div class="fg2">
+      <div>
+        <div class="fln">TALLER <b>SHAHBAZ</b></div>
+        <p class="fb-desc">Tu taller mecánico de confianza en Valencia. Más de 15 años ofreciendo reparaciones de calidad con honestidad y profesionalidad.</p>
+      </div>
+      <div class="fc">
+        <h4>Servicios</h4>
+        <a href="#svcs">Mecánica general</a>
+        <a href="#svcs">Diagnosis electrónica</a>
+        <a href="#svcs">Electricidad</a>
+        <a href="#svcs">Revisión Pre-ITV</a>
+      </div>
+      <div class="fc">
+        <h4>Contacto</h4>
+        <a href="tel:+34697655041">+34 697 655 041</a>
+        <a href="https://wa.me/34632423736">+34 632 423 736</a>
+        <a href="mailto:tallerjumar127282@gmail.com">tallerjumar127282@gmail.com</a>
+        <a href="https://maps.google.com/?q=Carrer+de+Torrent+28B,+46014+Valencia" target="_blank">C/ Torrente 28B, 46014 Valencia</a>
+      </div>
+    </div>
+    <div class="fbot">
+      <p>© 2025 Taller Shahbaz · Todos los derechos reservados</p>
+      <a href="https://wa.me/34614149046?text=Hola%20Umar,%20me%20gustaría%20una%20web%20como%20esta%20para%20mi%20negocio" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:rgba(255,255,255,.03);border:1px solid var(--bdr);padding:7px 14px;border-radius:100px;transition:all .25s;" onmouseover="this.style.background='rgba(255,255,255,.07)'" onmouseout="this.style.background='rgba(255,255,255,.03)'">
+        <span style="font-size:.72rem;color:#94a3b8;font-weight:600;">💻 Hecho por Muhammad Umar 🇵🇰</span>
+        <span style="font-size:.68rem;color:#475569;border-left:1px solid var(--bdr);padding-left:8px;">¿Quieres una web así? <strong style="color:#4ade80;">+34 614 149 046</strong></span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- FABS -->
+<div class="fabs">
+  <a href="tel:+34697655041" class="fab fab-p"><span class="fab-tip">Llamar ahora</span>📞</a>
+  <a href="https://wa.me/34632423736" class="fab fab-w">
+    <span class="fab-tip">WhatsApp</span>
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.485-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.297-.497.099-.198.05-.372-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.48 2 2 6.59 2 12.25c0 2.1.64 4.05 1.73 5.66L2 22l4.28-1.12c1.5.83 3.24 1.3 5.02 1.3 5.52 0 10-4.59 10-10.25S17.52 2 12 2z"/></svg>
+  </a>
+</div>
+
+<div class="toast" id="toast">✅ Abriendo WhatsApp...</div>
+
+<script>
+// LOADER
+window.addEventListener('load',()=>setTimeout(()=>document.getElementById('ldr').classList.add('hide'),980));
+
+// CURSOR
+const cd=document.getElementById('cd'),cr=document.getElementById('cr');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.14;ry+=(my-ry)*.14;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button,.svc,.qlink,.crow,.why-c').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cr.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>cr.classList.remove('hov'));
+});
+
+// SCROLL
+window.addEventListener('scroll',()=>{
+  const p=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+  document.getElementById('sp').style.width=p+'%';
+  document.getElementById('hdr').classList.toggle('stuck',window.scrollY>20);
+  let cur='';
+  document.querySelectorAll('section[id]').forEach(s=>{if(window.scrollY>=s.offsetTop-80)cur=s.id;});
+  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur));
+});
+
+// MOBILE NAV
+function tog(){document.getElementById('mnv').classList.toggle('open');}
+
+// CANVAS
+const cv=document.getElementById('hcv'),ctx=cv.getContext('2d');
+function rsz(){cv.width=window.innerWidth;cv.height=cv.parentElement.offsetHeight;}
+rsz();window.addEventListener('resize',rsz);
+class P{
+  constructor(){this.reset();}
+  reset(){this.x=Math.random()*cv.width;this.y=Math.random()*cv.height;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.r=Math.random()*1.3+.3;this.a=Math.random()*.4+.08;this.c=Math.random()>.6?'230,53,53':'59,130,246';}
+  update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>cv.width||this.y<0||this.y>cv.height)this.reset();}
+  draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`rgba(${this.c},${this.a})`;ctx.fill();}
+}
+const pts=Array.from({length:120},()=>new P());
+document.addEventListener('mousemove',e=>{pts.forEach(p=>{const dx=e.clientX-p.x,dy=e.clientY-p.y,d=Math.sqrt(dx*dx+dy*dy);if(d<120){p.vx-=dx/d*.22;p.vy-=dy/d*.22;}});});
+(function anim(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  ctx.strokeStyle='rgba(255,255,255,.016)';ctx.lineWidth=.5;
+  for(let x=0;x<cv.width;x+=58){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,cv.height);ctx.stroke();}
+  for(let y=0;y<cv.height;y+=58){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cv.width,y);ctx.stroke();}
+  for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+    const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+    if(d<90){ctx.beginPath();ctx.strokeStyle=`rgba(230,53,53,${.05*(1-d/90)})`;ctx.lineWidth=.4;ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.stroke();}
+  }
+  pts.forEach(p=>{p.update();p.draw();});
+  requestAnimationFrame(anim);
+})();
+
+// STATUS
+function isOpen(){
+  const n=new Date(),d=n.getDay(),t=n.getHours()*60+n.getMinutes();
+  if(d===0)return false;
+  if(d===6)return t>=600&&t<840;
+  return(t>=540&&t<840)||(t>=960&&t<1140);
+}
+const open=isOpen();
+const pill=document.getElementById('pill'),pdot=document.getElementById('pdot'),ptxt=document.getElementById('ptxt'),stag2=document.getElementById('stag2');
+if(open){
+  pill.style.cssText='background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.28);color:#4ade80;';
+  pdot.style.background='#22c55e';ptxt.textContent='Abierto ahora · Valencia';
+  stag2.textContent='● Abierto';stag2.style.cssText='background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25);color:#4ade80;';
+}else{
+  pill.style.cssText='background:rgba(230,53,53,.1);border-color:rgba(230,53,53,.28);color:#f87171;';
+  pdot.style.background='#e63535';ptxt.textContent='Cerrado ahora · Valencia';
+  stag2.textContent='● Cerrado';stag2.style.cssText='background:rgba(230,53,53,.1);border-color:rgba(230,53,53,.25);color:#f87171;';
+}
+
+// COUNTERS
+function cnt(el,to,sfx){
+  let s=null;
+  function step(ts){if(!s)s=ts;const p=Math.min((ts-s)/1800,1),e=1-Math.pow(1-p,4);
+  el.innerHTML=Math.floor(e*to)+'<sup style="-webkit-text-fill-color:#c9a84c;color:#c9a84c">'+sfx+'</sup>';if(p<1)requestAnimationFrame(step);}
+  requestAnimationFrame(step);
+}
+const co=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){cnt(document.getElementById('sY'),15,'+');cnt(document.getElementById('sC'),5000,'+');co.disconnect();}});},{threshold:.5});
+const sg=document.querySelector('.sgrid');if(sg)co.observe(sg);
+
+// REVEAL
+const ro=new IntersectionObserver(e=>{e.forEach((x,i)=>{if(x.isIntersecting)setTimeout(()=>x.target.classList.add('on'),i*55);});},{threshold:.08});
+document.querySelectorAll('.rv,.rl,.rr').forEach(el=>ro.observe(el));
+
+// FORM
+function sendWA(){
+  const n=document.getElementById('nombre').value.trim();
+  const t=document.getElementById('telefono').value.trim();
+  const v=document.getElementById('vehiculo').value.trim();
+  const s=document.getElementById('servicio').value;
+  const d=document.getElementById('descripcion').value.trim();
+  if(!n||!t||!v){alert('Por favor, rellena nombre, teléfono y vehículo.');return;}
+  let msg=`Hola, quiero solicitar una cita en Taller Shahbaz:\n\n👤 ${n}\n📱 ${t}\n🚗 ${v}`;
+  if(s)msg+=`\n🔧 ${s}`;if(d)msg+=`\n📝 ${d}`;
+  const toast=document.getElementById('toast');
+  toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2500);
+  setTimeout(()=>window.open(`https://wa.me/34632423736?text=${encodeURIComponent(msg)}`,'_blank'),600);
+}
+</script>
+</body>
+</html>
