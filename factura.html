@@ -1,0 +1,32 @@
+select,textarea,button{
+    -webkit-appearance:none;appearance:none;font-family:inherit;color:var(--ink);
+  }
+  input:focus,select:focus,textarea:focus,button:focus-visible{
+    outline:none;box-shadow:0 0 0 3px rgba(28,93,216,0.22);border-color:var(--blue);
+  }
+  .mono{
+    font-family:ui-monospace,"SF Mono","Roboto Mono",Menlo,Consolas,monospace;
+    font-variant-numeric:tabular-nums;
+  }
+  .app{max-width:560px;margin:0 auto;padding:0 14px;}
+
+  .topbar{display:flex;align-items:center;gap:12px;padding:18px 2px 12px;}
+  .brand-mark{
+    width:46px;height:46px;border-radius:50%;background:var(--steel);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;
+    flex-shrink:0;overflow:hidden;letter-spacing:0.5px;
+  }
+  .brand-mark img{width:100%;height:100%;object-fit:cover;}
+  .brand-mark img.hidden{display:none;}
+  .brand-text{flex:1;min-width:0;}
+  .brand-text h1{font-size:17px;margin:0;color:var(--steel);letter-spacing:0.2px;}
+  .brand-text p{font-size:11.5px;margin:1px 0 0;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;}
+  .icon-btn{
+    width:38px;height:38px;border-radius:10px;border:1px solid var(--line);
+    background:#fff;font-size:16px;color:var(--steel);flex-shrink:0;
+  }
+
+  .doctype-toggle{
+    display:flex;background:#fff;border-radius:12px;padding:4px;gap:4px;
+    border:1px solid var(--line);margin-bottom:14px;
+  }
