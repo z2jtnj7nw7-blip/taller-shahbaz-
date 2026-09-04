@@ -351,9 +351,35 @@ footer{background:#040407;border-top:1px solid var(--bdr);padding:60px 32px 32px
 .rr{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.23,1,.32,1),transform .8s cubic-bezier(.23,1,.32,1);}
 .rv.on,.rl.on,.rr.on{opacity:1;transform:translate(0);}
 .d1{transition-delay:.06s;}.d2{transition-delay:.14s;}.d3{transition-delay:.22s;}.d4{transition-delay:.30s;}
+/* ── ADMIN EDITOR ── */
+#admin-open{position:fixed;right:18px;bottom:18px;z-index:9998;border:1px solid rgba(212,168,71,.55);background:#101827;color:#f5d98c;border-radius:999px;padding:10px 15px;font:700 .72rem Inter,sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+#admin-panel{display:none;position:fixed;inset:0;z-index:9999;background:rgba(3,8,18,.82);align-items:center;justify-content:center;padding:18px}
+#admin-panel.open{display:flex}
+.admin-box{width:min(560px,100%);max-height:90vh;overflow:auto;background:#101827;color:#e5e7eb;border:1px solid #334155;border-radius:16px;padding:22px;box-shadow:0 20px 70px rgba(0,0,0,.5)}
+.admin-box h2{margin:0 0 8px;color:#f5d98c}.admin-box p{font-size:.82rem;color:#94a3b8;margin:0 0 14px}.admin-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.admin-box input{width:100%;padding:11px;border-radius:8px;border:1px solid #475569;background:#0b1220;color:#fff}.admin-box button{border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer}.admin-save{background:#22c55e;color:#052e16}.admin-close{background:#334155;color:#fff}.admin-help{background:#2563eb;color:#fff}.admin-on [data-admin-editable]{outline:1px dashed rgba(212,168,71,.65);outline-offset:3px}
 </style>
 </head>
 <body>
+<button id="admin-open" type="button">⚙ Admin</button>
+<div id="admin-panel" aria-hidden="true">
+  <div class="admin-box">
+    <h2>Panel de administración</h2>
+    <p>Activa edición para cambiar textos de toda la página. Los cambios se guardan en este navegador.</p>
+    <input id="admin-pass" type="password" placeholder="Contraseña de administrador" autocomplete="current-password">
+    <div class="admin-row">
+      <button class="admin-help" id="admin-login" type="button">Entrar</button>
+      <button class="admin-close" id="admin-cancel" type="button">Cerrar</button>
+    </div>
+    <div id="admin-tools" hidden>
+      <p>Haz clic en cualquier texto para editarlo. Haz clic en una imagen para cambiar su URL.</p>
+      <div class="admin-row">
+        <button class="admin-save" id="admin-save" type="button">Guardar cambios</button>
+        <button class="admin-help" id="admin-images" type="button">Cambiar imágenes</button>
+        <button class="admin-close" id="admin-exit" type="button">Salir</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- LOADER -->
 <div id="ldr">
@@ -748,6 +774,54 @@ footer{background:#040407;border-top:1px solid var(--bdr);padding:60px 32px 32px
 <div class="toast" id="toast">✅ Abriendo WhatsApp...</div>
 
 <script>
+// ADMIN EDITOR — client-side content and image editing
+const ADMIN_PASSWORD='sh127282';
+const adminPanel=document.getElementById('admin-panel');
+const adminTools=document.getElementById('admin-tools');
+const adminEditable=()=>Array.from(document.body.querySelectorAll('h1,h2,h3,h4,p,span,a,li,button,label,figcaption'))
+  .filter(el=>!el.closest('#admin-panel')&&!el.closest('#admin-open')&&!el.closest('script')&&!el.closest('style')&&!el.querySelector('svg'));
+function adminOpen(){adminPanel.classList.add('open');adminPanel.setAttribute('aria-hidden','false');}
+function adminClose(){adminPanel.classList.remove('open');adminPanel.setAttribute('aria-hidden','true');}
+function adminEnable(){
+  document.body.classList.add('admin-on');
+  adminEditable().forEach((el,i)=>{el.dataset.adminEditable=i;el.contentEditable='true';});
+  document.querySelectorAll('img').forEach((img,i)=>{if(!img.closest('#admin-panel'))img.dataset.adminImage=i;});
+  adminTools.hidden=false;
+}
+function adminDisable(){
+  document.body.classList.remove('admin-on');
+  document.querySelectorAll('[data-admin-editable]').forEach(el=>{el.contentEditable='false';delete el.dataset.adminEditable;});
+  document.querySelectorAll('[data-admin-image]').forEach(el=>delete el.dataset.adminImage);
+  adminTools.hidden=true;
+}
+function adminRestore(){
+  const saved=JSON.parse(localStorage.getItem('tallerAdminContent')||'{}');
+  adminEditable().forEach((el,i)=>{if(saved[i]!==undefined)el.innerHTML=saved[i];});
+  const images=JSON.parse(localStorage.getItem('tallerAdminImages')||'{}');
+  document.querySelectorAll('img').forEach((img,i)=>{if(images[i])img.src=images[i];});
+}
+document.getElementById('admin-open').addEventListener('click',adminOpen);
+document.getElementById('admin-cancel').addEventListener('click',adminClose);
+document.getElementById('admin-login').addEventListener('click',()=>{
+  if(document.getElementById('admin-pass').value!==ADMIN_PASSWORD){alert('Contraseña incorrecta');return;}
+  adminEnable();
+});
+document.getElementById('admin-exit').addEventListener('click',()=>{adminDisable();adminClose();});
+document.getElementById('admin-save').addEventListener('click',()=>{
+  const content={};adminEditable().forEach((el,i)=>content[i]=el.innerHTML);
+  localStorage.setItem('tallerAdminContent',JSON.stringify(content));
+  const images={};document.querySelectorAll('img').forEach((img,i)=>images[i]=img.src);
+  localStorage.setItem('tallerAdminImages',JSON.stringify(images));
+  alert('Cambios guardados en este navegador');
+});
+document.getElementById('admin-images').addEventListener('click',()=>{
+  const imgs=Array.from(document.querySelectorAll('img')).filter(img=>!img.closest('#admin-panel'));
+  const index=prompt('Numero de imagen (1-'+imgs.length+')');
+  const img=imgs[Number(index)-1];if(!img)return;
+  const url=prompt('URL nueva de la imagen',img.src);if(url)img.src=url;
+});
+adminRestore();
+
 // LOADER
 window.addEventListener('load',()=>setTimeout(()=>document.getElementById('ldr').classList.add('hide'),980));
 
