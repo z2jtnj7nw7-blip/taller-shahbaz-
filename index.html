@@ -794,23 +794,17 @@ function adminDisable(){
   document.querySelectorAll('[data-admin-image]').forEach(el=>delete el.dataset.adminImage);
   adminTools.hidden=true;
 }
-const ADMIN_API='https://taller-shahbaz-admin.kkfggv6j5p.workers.dev/content';
 function applyAdminData(data){
   const saved=data.content||{};
   adminEditable().forEach((el,i)=>{if(saved[i]!==undefined)el.innerHTML=saved[i];});
   const images=data.images||{};
   document.querySelectorAll('img').forEach((img,i)=>{if(images[i])img.src=images[i];});
 }
-async function adminRestore(){
-  const local={content:JSON.parse(localStorage.getItem('tallerAdminContent')||'{}'),images:JSON.parse(localStorage.getItem('tallerAdminImages')||'{}')};
-  try{
-    const response=await fetch(ADMIN_API);
-    if(!response.ok)throw new Error('Admin data request failed');
-    const remote=await response.json();
-    applyAdminData(remote);
-  }catch(error){
-    applyAdminData(local);
-  }
+function adminRestore(){
+  applyAdminData({
+    content:JSON.parse(localStorage.getItem('tallerAdminContent')||'{}'),
+    images:JSON.parse(localStorage.getItem('tallerAdminImages')||'{}')
+  });
 }
 document.getElementById('admin-open').addEventListener('click',adminOpen);
 document.getElementById('admin-cancel').addEventListener('click',adminClose);
@@ -819,15 +813,12 @@ document.getElementById('admin-login').addEventListener('click',()=>{
   adminEnable();
 });
 document.getElementById('admin-exit').addEventListener('click',()=>{adminDisable();adminClose();});
-document.getElementById('admin-save').addEventListener('click',async()=>{
+document.getElementById('admin-save').addEventListener('click',()=>{
   const content={};adminEditable().forEach((el,i)=>content[i]=el.innerHTML);
   const images={};document.querySelectorAll('img').forEach((img,i)=>images[i]=img.src);
-  const data={content,images};
   localStorage.setItem('tallerAdminContent',JSON.stringify(content));
   localStorage.setItem('tallerAdminImages',JSON.stringify(images));
-  const response=await fetch(ADMIN_API,{method:'PUT',headers:{'Content-Type':'application/json','X-Admin-Password':ADMIN_PASSWORD},body:JSON.stringify(data)});
-  if(!response.ok)throw new Error('Admin data save failed');
-  alert('Cambios guardados para todos los visitantes');
+  alert('Cambios guardados en este navegador');
 });
 document.getElementById('admin-images').addEventListener('click',()=>{
   const imgs=Array.from(document.querySelectorAll('img')).filter(img=>!img.closest('#admin-panel'));
